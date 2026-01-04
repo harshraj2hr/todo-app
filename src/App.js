@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './App.css';
+import TaskForm from './components/TaskForm';
+import TasksList from './components/TasksList';
 
 const App = () => {
   const [todo, setToDo] = useState("");
@@ -8,10 +10,10 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(todo.trim() === "") return;
-    if(editTodoId !== null){
+    if (todo.trim() === "") return;
+    if (editTodoId !== null) {
       todoList.map((item) => {
-        if(item.id === editTodoId){
+        if (item.id === editTodoId) {
           item.todo = todo;
         }
         return item;
@@ -22,12 +24,12 @@ const App = () => {
       return;
     }
 
-    setToDoList([...todoList, {id:`todo+${Date.now()}`, todo}]);
+    setToDoList([...todoList, { id: `todo+${Date.now()}`, todo }]);
     setToDo("");
   }
 
   const handleDelete = (id) => {
-    if(id === "") return;
+    if (id === "") return;
     console.log("deleting item with id:", id);
     setToDoList(todoList.filter((item) => item.id !== id));
   }
@@ -38,26 +40,11 @@ const App = () => {
       <div className="container">
         <h1>To-do App</h1>
 
-        <form className="todo-item" onSubmit={handleSubmit}>
-          <input type="text" value={todo} onChange={(e) => setToDo(e.target.value)} />
-          <button className="action-button" type="submit">{(editTodoId !== null) ? "edit" : "add"}</button>
-        </form>
+        <TaskForm handleSubmit={handleSubmit} todo={todo} setToDo={setToDo} editTodoId={editTodoId} />
+        <TasksList todoList={todoList} handleDelete={handleDelete} setEditToDo={setEditToDo} setToDo={setToDo} />
 
-        <ul className="tasks-container">
-          {todoList.map((item) => (
-          <li className='tasks-item' key={item.id}>
-            <span className="tasks-text" >{item.todo} </span>
-              <button className="action-button" onClick={() => handleDelete(item.id)}>delete</button>
-              <button className="action-button"  onClick={() => {
-                setEditToDo(item.id);
-                setToDo(item.todo);
-                }}>edit</button>
-            </li>
-          ))}
-        </ul>
-        
       </div>
-      </div>
+    </div>
   );
 }
 
