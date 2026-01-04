@@ -17,4 +17,5 @@ const TasksList = ({ todoList, handleDelete, setEditToDo, setToDo }) => {
     </>
   );
 };
+
 export default TasksList;
