@@ -1,0 +1,109 @@
+When can we not use react, and should we mix different react applications for MPAs?
+
+React, SPA & MPA — Quick Notes
+
+What React is good at
+• App-like UIs
+• Complex client state
+• Frequent interactions
+• Long user sessions
+• No full page reloads
+Examples: dashboards, editors, chat apps
+
+When NOT to use React
+• Mostly static content
+• Simple forms + links
+• SEO is top priority
+• Fast first load matters most
+• Little client-side state
+Examples: blogs, landing pages, docs
+
+SPA (Single Page App)
+• One JS app controls navigation
+• Fast in-app navigation
+• Heavy JS upfront
+• Harder SEO
+• App-like UX
+Use when UI state is complex.
+
+
+MPA (Multi Page App)
+• Each page is independent
+• Server handles navigation
+• Better SEO by default
+• Faster initial load
+• Simpler mental model
+Use for content-driven sites.
+
+
+Mixing SPA and MPA (Common)
+• Marketing site → MPA
+• Dashboard / app → React SPA
+• Same domain, different architecture
+Very common in real products.
+
+
+Multiple React apps?
+Yes.
+• Different sections → different React apps
+• Better isolation
+• Easier scaling for teams
+
+Example:
+/dashboard → React app
+/admin     → React app
+
+One big React app?
+• Shared routing & state
+• Good for single-purpose apps
+• Harder to scale long-term
+
+Modern approach
+• Hybrid frameworks (Next, Remix, Astro)
+• Server-render pages
+• React only where needed
+Best of both worlds.
+
+
+Rule to remember
+If it feels like an app → React
+If it feels like a website → MPA
+
+
+The modern compromise (important)
+Hybrid approaches:
+Next.js / Remix / Astro
+Server components
+Partial hydration
+Islands architecture
+
+They give:
+MPA benefits
+SPA interactivity where needed
+
+
+
+Can one React app be “tweaked” to behave like MPA?
+Yes, but it’s often worse than true MPA.
+Problems:
+Still loads JS for everything
+SEO hacks
+Bigger bundle
+Slower first load
+
+
+
+The real tradeoff between SPA and MPA
+SPA:
+Heavy JS upfront
+Complex state
+Harder SEO
+App-like UX
+
+MPA:
+Fast initial load
+Simple state
+SEO-friendly
+Page-based UX
+
+They solve different problems. As everthing when it comes to architechture. Neither is better or worse in this case.
