@@ -1,0 +1,65 @@
+useEffect exists because React re-renders unpredictably
+and side effects must not run during render.
+
+If React rendered only once, you wouldn’t need it.
+
+remember this, Ask:
+“Am I synchronizing with something outside React?”
+Yes → useEffect
+No → state + render
+
+Why React doesn’t auto-handle this
+Because:
+side effects must be controlled
+cleanup matters
+effects may restart
+render must stay pure
+
+
+Key rule (important)
+If your code touches something React does not own, use useEffect.
+Examples:
+fetch
+setTimeout
+addEventListener
+document.title
+localStorage
+WebSocket
+analytics
+
+
+❌ Render-based
+if (start) {
+  setInterval(...)
+}
+Leads to:
+multiple intervals
+memory leaks
+
+✅ Effect-based
+useEffect(() => {
+  if (!start) return;
+  const id = setInterval(...)
+  return () => clearInterval(id);
+}, [start]);
+
+React has two worlds
+
+1. React world
+state
+props
+rendering JSX
+
+2. Outside world
+APIs
+timers
+subscriptions
+DOM mutations
+browser APIs
+localStorage
+websockets
+
+useEffect is the bridge between them.
+
+=============================================================================
+

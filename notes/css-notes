@@ -1,0 +1,100 @@
+Layout & Design Notes (Minimal)
+• Size containers, not content
+• Prefer max-width over fixed width
+• Avoid fixed height; use min-height
+• One container controls width
+• Children should stretch/adapt
+
+Flex / Grid
+• Flex → one direction
+• Grid → two directions
+• Use flex: 1 for flexible space
+• Don’t fight layout with pixels
+
+Spacing
+• Padding = inside
+• Margin = outside
+• Use consistent spacing values
+
+Alignment
+• Center using parent, not child
+• Use gap, not margins, between items
+
+Text Safety
+• Assume text can be long
+• Prevent overflow
+
+word-break: break-word;
+
+Responsiveness
+• Start mobile-first
+• Test small screens early
+• Avoid screen-size assumptions
+
+Defaults
+* { box-sizing: border-box; }
+
+Red Flags
+
+• Fixed widths everywhere
+• Fixed heights on content
+• Margin hacks for centering
+• Layout breaks on small screens
+
+Rule to Remember
+If layout feels forced, stop and simplify.
+
+📐 Layout & Design Checklist (Quick Reference)
+🧠 Mindset
+⬜ Think in containers, not elements
+⬜ Let content flow, don’t force it
+⬜ Layout first, styling later
+
+📦 Sizing Rules
+⬜ Use max-width instead of fixed width
+⬜ Use min-height, avoid fixed height
+⬜ Size parents, not children
+⬜ Prefer %, rem, vh/vw over px
+width: 100%;
+max-width: 360px;
+
+📐 Flexbox / Grid
+⬜ Flexbox → one direction (row / column)
+⬜ Grid → rows + columns
+⬜ Use flex: 1 for flexible space
+⬜ Don’t fight layout with hard widths
+
+🎯 Alignment
+⬜ Center using the parent
+⬜ Avoid margin hacks for alignment
+⬜ Use gap instead of margins between items
+
+📏 Spacing
+⬜ Padding = inside space
+⬜ Margin = outside space
+⬜ Be consistent (use 4px / 8px / 16px scale)
+📝 Text Safety
+⬜ Assume text can be long
+⬜ Prevent overflow
+word-break: break-word;
+
+📱 Responsiveness
+⬜ Start mobile-first
+⬜ Test at small widths early
+⬜ Never assume screen size
+
+Global Defaults (Recommended)
+* {
+  box-sizing: border-box;
+}
+
+
+🚨 Red Flags (Stop & Re-think)
+❌ Fixed widths everywhere
+❌ Fixed heights on content
+❌ Centering with margins
+❌ Multiple elements controlling width
+❌ Layout breaks on small screens
+
+🏁 Golden Rule
+If layout feels hard, you’re forcing it. Step back.
