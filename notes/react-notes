@@ -63,3 +63,141 @@ useEffect is the bridge between them.
 
 =============================================================================
 
+Effects may run more than once in development.
+Do not rely on them running only once.
+Use cleanup when the effect creates ongoing work.
+Do not use normal variables for persistent state.
+
+React has a special development feature called Strict Mode.
+It is only for development.
+It does not exist in production.
+
+Strict Mode intentionally runs some code twice.
+This includes useEffect.
+
+Why React does this.
+React wants to detect unsafe side effects.
+A side effect is code that changes something outside React.
+Examples are fetch calls, timers, subscriptions, and mutations.
+
+To find bugs early, React does this.
+
+What exactly happens.
+React renders your component.
+React runs useEffect.
+React immediately cleans it up.
+React runs useEffect again.
+
+This simulates mounting and unmounting twice.
+If your effect is not safe, React will expose the bug.
+
+
+Now can you find a bug in this code, we want to stop interval only on unmount and interval to start when the application mounts.
+ useEffect(() => {
+    const id = setInterval(() => {
+      user()
+    }, 1000);
+    
+    clearInterval(id)
+  }, []);
+
+So we need to return a control to useEffect for it to know when it will run, it can be done in several ways.
+in this case
+return () => {
+    clearInterval(id)
+  }
+  does the job.
+because without return we just call clear and move out of useEffect.
+
+So,
+Code inside useEffect runs on mount.
+The returned function runs on cleanup.
+Cleanup must be returned, not executed.
+Cleanup is required only when the effect:
+creates a timer
+creates an interval
+adds an event listener
+opens a subscription
+allocates external resources
+
+Examples.
+
+Needs cleanup:
+setInterval
+addEventListener
+WebSocket
+subscriptions
+
+Does NOT need cleanup:
+one-time fetch
+synchronous calculations
+simple state updates
+
+rule.=
+Cleanup handles long-living side effects,
+not Strict Mode behavior.
+
+
+Another bug here, the cities are wrong, could you spot why
+
+
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setCountrySelection] = useState("");
+  const [cities, setCities] = useState([]);
+
+  const fetchCountries = async () => {
+    await fetch("https://countriesnow.space/api/v0.1/countries").then(res => res.json())
+  .then(data => setCountries(data.data))
+  .catch(err => console.error(err))
+  }
+
+  const fetchCities = async (country) => {
+    await setCountrySelection(country);
+    setCities(countries.filter((country) => country.country===selectedCountry).flatMap((country) => country.cities));
+  }
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
+
+  return (
+    <div className="App">
+       <h1>Hello World</h1>
+      <div className="App-header">
+       
+        <select name="Country" onChange={(e) => fetchCities(e.target.value)}>
+            <option selected disabled hidden>
+    Select country
+  </option>
+          {countries && countries.map((country) => {
+            return (
+              <option key={country.country} values={country.country}>{country.country}</option>
+            );
+          })}
+        </select>
+
+        <select name="City">
+            <option selected disabled hidden>
+    Select city
+  </option>
+          {cities && cities.map((city) => {
+            return (
+              <option key={city} value={city}>{city}</option>
+            );
+          })}
+        </select>
+
+        <button>Go</button>
+      </div>
+    </div>
+  );
+}
+
+
+
+
+Look carefully for rendering erros, sttale state etcetra.
+
+hint, the state desnt get updated immediately on invovation. state set function is asynchronous.
+
